@@ -16,7 +16,7 @@ def categorize_expense(description):
     """
     
     response = client.chat.completions.create(
-            model="gpt-3",  # Use GPT-4 or GPT-3.5
+            model="gpt-3.5-turbo",  # Use GPT-4 or GPT-3.5
             messages=[{"role": "system", "content": "You are an AI that categorizes expenses."},
                     {"role": "user", "content": prompt}],
             max_tokens=50
