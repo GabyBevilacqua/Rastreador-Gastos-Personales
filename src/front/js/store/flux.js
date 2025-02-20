@@ -21,6 +21,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			// This is the function that will be called from the component
+			// and will fetch the data from the backend
+			login: async (formData) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
+						method: "POST",
+						body: JSON.stringify(formData),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+					const data = await resp.json();
+					console.log(data);
+					setStore({user: data.user});
+				} catch (error) {
+					console.log("Error logging in", error);
+				}
+			},
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
