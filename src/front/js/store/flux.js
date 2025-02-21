@@ -40,6 +40,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			categorize: async ({ price, description}) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "api/categorize_expenses", {
+						method: "POST",
+						body: JSON.stringify({ price, description, user_id: getStore().user.id }),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+					const data = await resp.json();
+					console.log(data);
+					getActions().fetchExpenses();
+	//				setStore({categorize: data});
+				} catch (error) {
+					console.log("Error categorizing", error);
+				}
+			},
+
+			fetchExpenses : async () => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL +`api/expenses/${getStore().user.id}`);
+					if (!response.ok) {
+						throw new Error("Error fetching expenses");
+					}
+					const data = await response.json();
+					setStore({expenses: data});
+				} catch (error) {
+					console.error("Error fetching gastos:", error);
+				}
+			},
+
+			deleteExpense: async (id) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL +`api/expenses/${id}`, {
+						method: "DELETE"
+					});
+					if (!response.ok) {
+						throw new Error("Error deleting expense");
+					}
+					const data = await response.json();
+					getActions().fetchExpenses();
+				} catch (error) {
+					console.error("Error deleting expense:", error);
+				}
+			},
+		
+	
+
+// ----------------------------------------------------------------------------------
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
