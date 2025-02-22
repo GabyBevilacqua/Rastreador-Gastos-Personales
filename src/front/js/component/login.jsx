@@ -26,7 +26,7 @@ export const Login = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h1>BudgetBuddy login</h1>
+            <h1>Login</h1>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input

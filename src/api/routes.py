@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.services.categorizer import categorize_expense
 import json
+from datetime import datetime, timedelta
 
 import os
 
@@ -28,6 +29,7 @@ def handle_hello():
 @api.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
+    name = data.get('name')
     email = data.get('email')
     password = data.get('password')
 
@@ -37,7 +39,7 @@ def create_user():
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "User already exists"}), 400
 
-    new_user = User(email=email, password=password, is_active=True)
+    new_user = User(email=email, password=password, name=name, is_active=True)
     db.session.add(new_user)
     db.session.commit()
 
@@ -68,7 +70,8 @@ def categorize_expenses():
         description=description,
         category=resp_dict['category'].lower(),
         subcategory=resp_dict['subcategory'].lower(),
-        user_id=user.id
+        user_id=user.id,
+        date=datetime.utcnow()  # Agrega la fecha actual
     )
 
     db.session.add(new_expense)
@@ -130,3 +133,4 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 401
 
     return jsonify({"user":user.serialize()}), 200
+

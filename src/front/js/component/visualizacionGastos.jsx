@@ -21,6 +21,7 @@ export const VisualizacionGastos = () => {
                         description={expense.description}
                         amount={expense.amount}
                         category={expense.category}
+                        date={expense.date}
                         eid={expense.id}
                     />
                 ))}

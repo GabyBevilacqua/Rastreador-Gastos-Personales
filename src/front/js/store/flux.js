@@ -21,8 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			// This is the function that will be called from the component
-			// and will fetch the data from the backend
+		
 			login: async (formData) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
@@ -40,11 +39,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			categorize: async ({ price, description}) => {
+			categorize: async ({ price, description }) => {
 				try {
+					const date = new Date().toISOString(); // Obtiene la fecha actual en formato ISO
 					const resp = await fetch(process.env.BACKEND_URL + "api/categorize_expenses", {
 						method: "POST",
-						body: JSON.stringify({ price, description, user_id: getStore().user.id }),
+						body: JSON.stringify({ price, description, user_id: getStore().user.id, date }),
 						headers: {
 							"Content-Type": "application/json"
 						}
