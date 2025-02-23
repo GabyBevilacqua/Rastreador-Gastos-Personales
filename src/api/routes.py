@@ -9,6 +9,10 @@ from api.services.categorizer import categorize_expense
 import json
 from datetime import datetime, timedelta
 
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token
+
 import os
 
 api = Blueprint('api', __name__)
@@ -29,17 +33,19 @@ def handle_hello():
 @api.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-
-    if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
-
-    if User.query.filter_by(email=email).first():
-        return jsonify({"error": "User already exists"}), 400
-
-    new_user = User(email=email, password=password, name=name, is_active=True)
+    
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({"message": "El correo electrónico ya está en uso"}), 400
+    
+   # hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    
+    new_user = User(
+        name=data['name'],
+        email=data['email'],
+        password=data['password'],
+        is_active=True
+    )
+  
     db.session.add(new_user)
     db.session.commit()
 

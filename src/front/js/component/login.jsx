@@ -1,31 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Login = () => {
     const { actions } = useContext(Context);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-    });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        const success = await actions.login(email, password);
+        if (success) {
+           navigate("/profileView"); // Redirigir a la página del perfil 
+        } else {
+            alert("Usuario o contraseña incorrectos");
+        }
     };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        actions.login(formData);
-    }
-
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
             <h1>Login</h1>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -34,8 +31,7 @@ export const Login = () => {
                     className="form-control input-short"
                     id="email"
                     name="email"
-                    onChange={handleChange}
-                    value={formData.email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
             <div className="form-group">
@@ -45,17 +41,15 @@ export const Login = () => {
                     className="form-control input-short"
                     id="password"
                     name="password"
-                    onChange={handleChange}
-                    value={formData.password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
             <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => actions.login(formData)}>
+                type="submit"
+                className="btn btn-primary mt-3"
+                >
                 Login
             </button>
-
         </form>
     )
 }

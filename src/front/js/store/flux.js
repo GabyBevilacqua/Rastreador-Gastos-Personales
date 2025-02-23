@@ -13,7 +13,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+
+			registerUser: [],
+			authToken: null, // Añadir token de autenticación
+			user: null // Añadir informacion del usuario
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,22 +26,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-		
-			login: async (formData) => {
+			// Acción para registrar un usuario
+			registerUser: async (formData) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
+					const response = await fetch(process.env.BACKEND_URL + "api/users", {
 						method: "POST",
-						body: JSON.stringify(formData),
 						headers: {
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(formData)
+					});
+
+					if (!response.ok) {
+						const errorData = await response.json();
+						throw new Error(errorData.message); // Lanza el mensaje del backend
+					}
+
+					const data = await response.json();
+					return true; // Registro exitoso
+				} catch (error) {
+					console.error("Error al registrar el usuario:", error.message);
+					throw error; // Lanza el error al componente
+				}
+			},
+
+		
+			login: async (email, password) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
+						method: "POST",					
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ email, password }),
 					});
 					const data = await resp.json();
-					console.log(data);
-					setStore({user: data.user});
-				} catch (error) {
-					console.log("Error logging in", error);
-				}
+                    if (resp.ok) {
+                        setStore({ user: data.user });
+                        return true;
+                    } else {
+                        console.error("Login failed:", data.message);
+                        return false;
+                    }
+                } catch (error) {
+                    console.log("Error logging in", error);
+                    return false;
+                }
+            },
+
+			logout : () => {
+				setStore({ authToken: null, user: null });
+
 			},
 
 			categorize: async ({ price, description }) => {
@@ -85,7 +125,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error deleting expense:", error);
 				}
 			},
-		
+
+			// llama la informacion de nuevo si se refresca la pagina
+			getData : () =>{
+				const data = localStorage.getItem("authToken") || null;
+				const user = JSON.parse(localStorage.getItem("user")) || null;
+				setStore({ authToken: data, user : user});
+
+			},
 	
 
 // ----------------------------------------------------------------------------------

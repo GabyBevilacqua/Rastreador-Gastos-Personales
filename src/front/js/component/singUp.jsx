@@ -13,40 +13,68 @@ export const SingUp = () => {
         password: "",
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Formulario enviado");
-    }
+        try {
+            const success = await actions.registerUser(formData); // Asume que devuelve `true` o lanza error
+            if (success) {
+                alert("Usuario creado con éxito, inicia sesion");
+                setFormData({ name: "", email: "", password: "" }); // Restablece los campos del formulario
+                navigate("/");
+            }
+        } catch (error) {
+            // Mostrar el mensaje de error del servidor
+            alert(error.message || "Error al registrar el usuario");
+        }
+    };
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+    };
 
 
     return (
-        <form  onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <h1>Registro</h1>
             <div className="form-group">
-                <label htmlFor="exampleInputName">Nombre y apellido</label>
+                <label htmlFor="name">Nombre y apellido</label>
                 <input
-                    type="name"
+                    type="text"
                     className="form-control input-short"
-                    id="exampleInputName1"
-                    />
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
             </div>
             <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                     type="email"
                     className="form-control input-short"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp" />
+                    id="email"
+                    aria-describedby="emailHelp"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
                 <small id="emailHelp" className="form-text text-muted">No compartiremos tu email</small>
             </div>
             <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     className="form-control input-short"
-                    id="exampleInputPassword1" />
+                    id="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary mt-3">
+                Guardar
+            </button>
         </form>
     )
 }
