@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
-export const CardExpense = ({ description, amount, category, date, eid }) => {
+export const CardExpense = ({ description, amount, category, subcategory, date, eid }) => {
     const { store, actions } = useContext(Context);
 
     const expenseTypes = {
@@ -34,14 +34,15 @@ export const CardExpense = ({ description, amount, category, date, eid }) => {
 
     return (
 
-        <div className="card" style={{ width: "18rem", backgroundColor }}>
+        <div className="card" style={{ width: "14rem", backgroundColor }}>
             <div className="card-header">
                 Expense
             </div>
             <div className="card-body">
                 <p className="card-text">{formattedDate}</p>
                 <h5 className="card-title">{categoryName}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{amount}</h6>
+                <p className="card-text">{subcategory}</p>
+                <h6 className="card-subtitle mb-2 text-muted">{amount} €</h6>
                 <p className="card-text">{description}</p>
                 <button
                     className="btn btn-danger"

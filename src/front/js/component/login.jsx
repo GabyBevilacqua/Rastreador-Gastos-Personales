@@ -29,7 +29,7 @@ export const Login = () => {
                 <input
                     type="email"
                     className="form-control input-short"
-                    id="email"
+                    id="email1"
                     name="email"
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -39,7 +39,7 @@ export const Login = () => {
                 <input
                     type="password"
                     className="form-control input-short"
-                    id="password"
+                    id="password1"
                     name="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />

@@ -9,6 +9,8 @@ export const Categorizador = () => {
         description: ""
     });
 
+    const [loading, setLoading] = useState(false);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -16,18 +18,21 @@ export const Categorizador = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        actions.categorize(formData);
+        setLoading(true);
+        await actions.categorize(formData);
         setFormData({
             price: "",
             description: ""
         });
+        setLoading(false);
     };
 
     return (
         <div className="container">
             <h1>Categorizador</h1>
+            {loading && <div className="spinner-border text-primary" role="status"> </div>}
             <form   onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="price">Precio</label>
