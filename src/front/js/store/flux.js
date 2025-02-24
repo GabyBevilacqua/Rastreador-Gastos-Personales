@@ -51,31 +51,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 		
-			login: async (email, password) => {
+			login:  async (email, password) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
-						method: "POST",					
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ email, password }),
+					const response = await fetch(process.env.BACKEND_URL + "api/login", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ email, password })
 					});
-					const data = await resp.json();
-                    if (resp.ok) {
-                        setStore({ user: data.user });
-                        return true;
-                    } else {
-                        console.error("Login failed:", data.message);
-                        return false;
-                    }
-                } catch (error) {
-                    console.log("Error logging in", error);
-                    return false;
-                }
-            },
+
+					if (response.ok) {
+						const data = await response.json();
+						setStore({ authToken: data.access_token, user: data.user });
+						localStorage.setItem("authToken", data.access_token); // Guarda el token en el almacenamiento local
+						localStorage.setItem("user", JSON.stringify(data.user)); // Guarda los datos del usuario
+						console.log("Login successful!", data);
+						return true; // Indica éxito en el inicio de sesión 
+					} else {
+						console.log("Login failed!");
+						return false; // Indica fracaso en el inicio de sesión 
+					}
+				} catch (error) {
+					console.error("Error logging in", error);
+					return false;
+				}
+			},
 
 			logout : () => {
 				setStore({ authToken: null, user: null });
+				localStorage.removeItem("authToken");	// Elimina el token de autenticación
+				localStorage.removeItem("user");	// Elimina la información del usuario	
 
 			},
 
@@ -123,6 +127,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					getActions().fetchExpenses();
 				} catch (error) {
 					console.error("Error deleting expense:", error);
+				}
+			},
+
+			// Acción para eliminar un usuario por ID
+			deleteUser: async (userId) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}api/user/${userId}`, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+
+					if (response.ok) {
+						console.log("Usuario eliminado exitosamente");
+						return true;
+					} else {
+						console.error("Error al eliminar el usuario");
+						return false;
+					}
+				} catch (error) {
+					console.error("Error al eliminar el usuario:", error);
+					return false;
 				}
 			},
 

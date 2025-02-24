@@ -19,6 +19,7 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+bcrypt = Bcrypt()
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -37,12 +38,12 @@ def create_user():
     if User.query.filter_by(email=data['email']).first():
         return jsonify({"message": "El correo electrónico ya está en uso"}), 400
     
-   # hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     
     new_user = User(
         name=data['name'],
         email=data['email'],
-        password=data['password'],
+        password=hashed_password,
         is_active=True
     )
   
@@ -134,9 +135,10 @@ def login():
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
 
-    user = User.query.filter_by(email=email, password=password).first()
-    if not user or not user.password == password:
-        return jsonify({"error": "Invalid credentials"}), 401
-
-    return jsonify({"user":user.serialize()}), 200
+    user = User.query.filter_by(email=email).first()
+    if user and bcrypt.check_password_hash(user.password, password):
+        access_token = create_access_token(identity=str(user.id))
+        return jsonify({"message": "Inicio de sesión exitoso", "access_token": access_token, "user": user.serialize()}), 200
+    else:
+        return jsonify({"message": "Email de usuario o contraseña incorrectos"}), 401
 

@@ -50,7 +50,7 @@ export const Categorizador = () => {
                 </div>
                 <button 
                 type="submit" 
-                className="btn btn-primary">
+                className="btn btn-primary mt-3 mb-3">
                     Agregar
                 </button>
             </form>

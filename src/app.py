@@ -12,6 +12,15 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 import openai
 
+from flask_jwt_extended import JWTManager
+from datetime import timedelta
+#from flask_mail import Mail, Message
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, decode_token
+import base64  
+from werkzeug.security import generate_password_hash
+from werkzeug.exceptions import Unauthorized
+from flask_cors import CORS
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -19,6 +28,11 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+# Configuración de JWT
+app.config["JWT_SECRET_KEY"] = "your_jwt_secret_key"  # Cambia esto por una clave secreta segura
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
+jwt = JWTManager(app)
 
 
 # database condiguration

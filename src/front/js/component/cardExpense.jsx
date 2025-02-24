@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
-export const CardExpense = ({ description, amount, category, eid }) => {
+export const CardExpense = ({ description, amount, category, date, eid }) => {
     const { store, actions } = useContext(Context);
 
     const expenseTypes = {
@@ -25,6 +25,13 @@ export const CardExpense = ({ description, amount, category, eid }) => {
     const categoryName = expenseTypes[category] || "Otro";
     const backgroundColor = categoryColors[category] || "lightblue";
 
+    // Formatea la fecha en el formato día/mes/año  porque sino sale con hora segundos y miliseg
+    const formattedDate = new Date(date).toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+
     return (
 
         <div className="card" style={{ width: "18rem", backgroundColor }}>
@@ -32,14 +39,16 @@ export const CardExpense = ({ description, amount, category, eid }) => {
                 Expense
             </div>
             <div className="card-body">
+                <p className="card-text">{formattedDate}</p>
                 <h5 className="card-title">{categoryName}</h5>
                 <h6 className="card-subtitle mb-2 text-muted">{amount}</h6>
                 <p className="card-text">{description}</p>
                 <button
                     className="btn btn-danger"
                     onClick={() => actions.deleteExpense(eid)}
-
-                >Delete</button>
+                >
+                    Borrar
+                </button>
             </div>
         </div>
 
