@@ -121,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Acción para eliminar un usuario por ID
 			deleteUser: async (userId) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}api/user/${userId}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}api/users/${userId}`, {
 						method: "DELETE",
 						headers: {
 							"Content-Type": "application/json"

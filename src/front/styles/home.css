@@ -1,11 +1,159 @@
-/*
-    home.css: This website contains selectors only used in home.css
+body {
+    background-image: url('https://img.freepik.com/vector-gratis/fondo-tinta-alcohol-acuarela_52683-72225.jpg?t=st=1740664129~exp=1740667729~hmac=9d08619d892348747f254aa0fae662970fc88ca7c545943ae7ba10aedc97d419&w=1060'); 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+}
+.box01{
+    background-color: rgba(255, 255, 255, 0.466);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-right: 300px;
+    margin-left: 300px;
+}
 .input-short {
-    width: 25%; /* Ajusta este valor según tus necesidades */
+    width: 50%; /* Ajusta este valor según tus necesidades */
     margin: 0 auto; /* Centra los inputs */
 }
+
+.button2 {
+    display: inline-block;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    color: #090909;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #a9ceff;
+    border: 1px solid #e8e8e8;
+   /* box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff; */
+  }
+  
+  .button2:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+  }
+  
+  .button2:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .button2:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #203953;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .button2:hover {
+    color: #ffffff;
+    border: 1px solid #203953;
+  }
+  
+  .button2:hover:before {
+    top: -35%;
+    background-color: #203953;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+  
+  .button2:hover:after {
+    top: -45%;
+    background-color: #203953;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+
+  /*--------------- boton rojo-------------------------*/
+    .button3 {
+        display: inline-block;
+        transition: all 0.2s ease-in;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        color: #090909;
+        padding: 0.5em 1em;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 0.5em;
+        background: #ffc4c4;
+        border: 1px solid #e8e8e8;
+     /* box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff; */
+    }
+
+    .button3:active {
+        color: #666;
+        box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    }
+
+    .button3:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) scaleY(1) scaleX(1.25);
+        top: 100%;
+        width: 140%;
+        height: 180%;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 50%;
+        display: block;
+        transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+        z-index: -1;
+    }
+
+    .button3:after {
+        content: "";
+        position: absolute;
+        left: 55%;
+        transform: translateX(-50%) scaleY(1) scaleX(1.45);
+        top: 180%;
+        width: 160%;
+        height: 190%;
+        background-color: #203953;
+        border-radius: 50%;
+        display: block;
+        transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+        z-index: -1;
+    }
+
+    .button3:hover {
+        color: #ffffff;
+        border: 1px solid #532020;
+    }
+
+    .button3:hover:before {
+        top: -35%;
+        background-color: #532020;
+        transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+    }
+
+    .button3:hover:after {
+        top: -45%;
+        background-color: #532020;
+        transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+    }
+    

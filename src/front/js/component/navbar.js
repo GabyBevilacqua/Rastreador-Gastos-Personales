@@ -12,6 +12,14 @@ export const Navbar = () => {
 		navigate("/");
 	}
 
+	const handleDelete = () => {
+		if (window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?")) {
+			actions.deleteUser();
+			alert("Cuenta eliminada exitosamente.");
+			navigate("/");
+		}
+	}
+
 
 	return (
 		<nav className="navbar navbar-light bg-light">
@@ -27,6 +35,11 @@ export const Navbar = () => {
 						<ul className="dropdown-menu">
 							<li><Link className="dropdown-item" to="/">Home</Link></li>
 							<li><Link className="dropdown-item" to="/profileView">Perfil de usuario</Link></li>
+							<li
+							className="dropdown-item"
+							onClick={handleDelete}							
+							>	Eliminar cuenta							
+							</li>
 							<li
 							className="dropdown-item"
 							onClick={handleLogout}							

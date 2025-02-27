@@ -7,18 +7,24 @@ export const CardExpense = ({ description, amount, category, subcategory, date, 
     const expenseTypes = {
         food: "Comida",
         groceries: "Mercado",
-        health: "Health",
+        debt: "Deudas",
         entertainment: "Entretenimiento",
-        education: "Education",
+        housing: "Alquiler",
+        utilities: "Servicios",
+        'online shopping': "Compras online",
+        fitness: "Gimnasio",
         other: "Other"
     };
 
     const categoryColors = {
         food: '#FFB6B9',        // Rosa pastel
         groceries: '#C5E1A5',   // Verde menta
-        health: '#FFDD94',      // Amarillo pastel
+        debt: '#FFDD94',      // Amarillo pastel
         entertainment: '#A5D8FF', // Azul celeste
-        education: '#F5C6E5',   // Rosa lavanda
+        housing: '#F5C6E5',   // Rosa lavanda
+        utilities: '#FFC8A2', // Naranja pastel
+        'online shopping': '#FFD8B8', // Melocotón
+        fitness: '#B5EAD7',   // Verde agua
         other: '#E0E0E0'        // Gris claro
     };
 
@@ -45,7 +51,7 @@ export const CardExpense = ({ description, amount, category, subcategory, date, 
                 <h6 className="card-subtitle mb-2 text-muted">{amount} €</h6>
                 <p className="card-text">{description}</p>
                 <button
-                    className="btn btn-danger"
+                    className="button3"
                     onClick={() => actions.deleteExpense(eid)}
                 >
                     Borrar

@@ -141,4 +141,17 @@ def login():
         return jsonify({"message": "Inicio de sesión exitoso", "access_token": access_token, "user": user.serialize()}), 200
     else:
         return jsonify({"message": "Email de usuario o contraseña incorrectos"}), 401
+    
+    # ------------- delete user -------------
+    
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"msg": "User deleted"}), 200
 

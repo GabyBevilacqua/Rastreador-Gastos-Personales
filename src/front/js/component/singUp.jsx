@@ -72,7 +72,7 @@ export const SingUp = () => {
                     required
                 />
             </div>
-            <button type="submit" className="btn btn-primary mt-3">
+            <button type="submit" className="button2 mt-3">
                 Guardar
             </button>
         </form>

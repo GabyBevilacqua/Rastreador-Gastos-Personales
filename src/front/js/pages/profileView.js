@@ -7,7 +7,7 @@ export const ProfileView = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="text-center mt-5">
+        <div className="text-center mt-5 box01">
             <h1>BudgetBuddy</h1>
             <p>Bienvenido {store.user?.name}</p>
             {store.user && (
@@ -16,7 +16,7 @@ export const ProfileView = () => {
                     <VisualizacionGastos />
                 </>
             )}
-            <h3>Tu compañero de gastos personales!</h3>
+            <h3 className="mt-3">Tu compañero de gastos personales!</h3>
         </div>
     );
 };
