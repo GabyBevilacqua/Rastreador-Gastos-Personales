@@ -36,12 +36,12 @@ export const Navbar = () => {
 							<li><Link className="dropdown-item" to="/">Home</Link></li>
 							<li><Link className="dropdown-item" to="/profileView">Perfil de usuario</Link></li>
 							<li
-							className="dropdown-item"
+							className="dropdown-item cursor-pointer"
 							onClick={handleDelete}							
 							>	Eliminar cuenta							
 							</li>
 							<li
-							className="dropdown-item"
+							className="dropdown-item cursor-pointer"
 							onClick={handleLogout}							
 							>	Cerrar sesión							
 							</li>

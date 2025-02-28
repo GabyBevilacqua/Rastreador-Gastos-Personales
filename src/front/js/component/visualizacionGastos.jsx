@@ -16,8 +16,7 @@ export const VisualizacionGastos = () => {
 
     useEffect(() => {
         actions.fetchExpenses();
-    }
-        , []);
+    }, []);
 
     const handleMonthChange = (e) => {
         setSelectedMonth(parseInt(e.target.value));
@@ -34,6 +33,13 @@ export const VisualizacionGastos = () => {
     const handleInitialAmountChange = (e) => {
         setInitialAmount(parseFloat(e.target.value));
     };
+
+    /* const handleInitialAmountChange = (e) => {    // si pongo esto me trae los expenses de otro usuario que no es
+        const newInitialAmount = parseFloat(e.target.value);
+        setInitialAmount(newInitialAmount);
+        // Guarda el monto inicial en localStorage
+        localStorage.setItem("initialAmount", newInitialAmount);
+    }; */
 
     const filteredExpenses = store.expenses?.filter(expense => {
         const expenseDate = new Date(expense.date);
@@ -57,7 +63,7 @@ export const VisualizacionGastos = () => {
                         onChange={handleInitialAmountChange}
                     />
                 </div>
-                <div className="col-auto">
+                {/* {<div className="col-auto">
                     <label htmlFor="availableAmount">Monto Disponible:</label>
                     <input
                         type="number"
@@ -66,9 +72,9 @@ export const VisualizacionGastos = () => {
                         value={availableAmount}
                         onChange={handleAvailableAmountChange}
                     />
-                </div>
+                </div>} */}
             </div>
-            <div className="row justify-content-center mb-3">
+            <div className="row justify-content-center">
                 <div className="col-auto">
                     <div className="d-flex">
                         <div className="p-2">
@@ -83,7 +89,7 @@ export const VisualizacionGastos = () => {
                     </div>
                 </div>
             </div>
-            <div className="row justify-content-center mb-3">
+            <div className="row justify-content-center mb-2">
                 <div className="col-auto">
                     <label htmlFor="month">Mes:</label>
                     <select id="month" className="form-control" value={selectedMonth} onChange={handleMonthChange}>
