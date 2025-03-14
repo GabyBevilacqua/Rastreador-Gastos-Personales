@@ -19,8 +19,9 @@ def categorize_expense(description):
             model="gpt-3.5-turbo",  # Use GPT-4 or GPT-3.5
             messages=[{"role": "system", "content": "You are an AI that categorizes expenses."},
                     {"role": "user", "content": prompt}],
-            max_tokens=50
+            max_tokens=100
         )
         
     category_info = response.choices[0].message.content.strip()
+    print(category_info)
     return category_info
