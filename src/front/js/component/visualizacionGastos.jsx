@@ -7,11 +7,11 @@ export const VisualizacionGastos = () => {
     const [selectedMonth, setSelectedMonth] = useState(0); // 0 representa "Todos los meses"
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Año actual
     const [availableAmount, setAvailableAmount] = useState(0); // Monto disponible
-    const [initialAmount, setInitialAmount] = useState(() => { 
+    const [initialAmount, setInitialAmount] = useState(0);          //useState(() => { 
         // Recupera el monto inicial de localStorage al cargar el componente
-        const savedInitialAmount = localStorage.getItem("initialAmount");
-        return savedInitialAmount ? parseFloat(savedInitialAmount) : 0;
-    }); // Monto inicial
+        //const savedInitialAmount = localStorage.getItem("initialAmount");
+       // return savedInitialAmount ? parseFloat(savedInitialAmount) : 0;
+ //   }); // Monto inicial
 
 
     useEffect(() => {
